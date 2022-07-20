@@ -1,6 +1,7 @@
 $font-stack: "Lucida Sans";
 $primary-color: #fdf5df;
 $fontcolor: #2aa198;
+$radius: 6px;
 
 body {
   height: 100vh;
@@ -30,5 +31,9 @@ h1 {
 }
 .container {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+input{height: 20px;
+width: 100px;
+border-radius: $radius;}

@@ -1,12 +1,13 @@
 import React, { DetailedHTMLProps, useEffect } from "react";
-import { getPersons } from "./storage";
+import { getPersons, searchFunction, sortFunction } from "./storage";
 import { useState } from "react";
 import { Person } from "./domain/person";
 function AlphabeticList() {
   const [person, setPerson] = useState<Array<Person>>([]);
+  const [eingabe, setEingabe] = useState(String);
 
   useEffect(() => {
-    getPersons().then((value: Person[]) => {
+    sortFunction().then((value: Person[]) => {
       if (value) {
         setPerson(value);
       }
@@ -14,16 +15,24 @@ function AlphabeticList() {
   }, []);
   console.log(person);
 
-  person.sort(function (a, b) {
-    return a.name.toUpperCase().localeCompare(b.name.toUpperCase());
-  });
+  function eingabeFunction(event: React.FormEvent<HTMLInputElement>) {
+    setEingabe((event.target as HTMLInputElement).value);
+  }
+
+  function searchNow() {
+    searchFunction(eingabe).then((value: Person[]) => {
+      if (value) {
+        setPerson(value);
+      }
+    });
+  }
 
   const onepersonview = person.map((p: Person) => {
     const message = p.message ? "Send Message" : <></>;
     const postcard = p.postcard ? "Send Postcard" : <></>;
     const present = p.present ? "Buy a present" : <></>;
     return (
-      <div className="container">
+      <div>
         <div className="onebox">
           <div>{p.name}</div>
           <div>
@@ -42,10 +51,18 @@ function AlphabeticList() {
     <>
       <div className="container">
         <h1>Your friends</h1>
+        <div>
+          <input
+            type="text"
+            placeholder="Search Name"
+            value={eingabe}
+            onChange={eingabeFunction}
+          ></input>
+          <button onClick={searchNow}>Search</button>
+        </div>
 
-        <input type="text" placeholder="Search Name"></input>
+        <div>{onepersonview}</div>
       </div>
-      <div>{onepersonview}</div>
     </>
   );
 }
