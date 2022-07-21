@@ -7,4 +7,8 @@ export class Birthday {
     this.month = month;
     this.year = year;
   }
+
 }
+
+
+

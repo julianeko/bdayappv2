@@ -1,13 +1,7 @@
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { Birthday } from "./domain/birthday";
 import { Person } from "./domain/person";
-const moment = require("moment");
-const today = moment();
-const dateformatedDay = Number(today.format("DD"));
-const dateformatedMonth = Number(today.format("M"));
 
-console.log(dateformatedDay);
-console.log(dateformatedMonth);
 const PersonsArray: Array<Person> = [
   {
     name: "Sebastian Thelen",
@@ -56,19 +50,47 @@ export async function searchFunction(wert: string): Promise<Person[]> {
     }
   });
 }
+export async function countDownFunction(e: Person) {
+  const moment = require("moment");
+  const today = moment();
+  const dateformatedDay = Number(today.format("DD"));
+  const dateformatedMonth = Number(today.format("M"));
+  var month = e.birthday.month - 1;
+
+  function yearPlusOne() {
+    var year = new Date().getFullYear();
+    if (e.birthday.month <= dateformatedMonth) {
+      return year + 1;
+    } else return year;
+  }
+
+  var countDownDate = new Date(yearPlusOne(), month, e.birthday.day).getTime();
+  console.log(countDownDate);
+  var now = new Date().getTime();
+  var distance = countDownDate - now;
+  console.log(distance);
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  console.log(days);
+  return days;
+}
 
 export async function sortDateFunction() {
+  const moment = require("moment");
+  const today = moment();
+  const dateformatedDay = Number(today.format("DD"));
+  const dateformatedMonth = Number(today.format("M"));
+
   const personssortdate = await PersonsArray.sort(
-    (element1: any, element2: any) => {
+    (element1: Person, element2: Person) => {
       const e1infuture =
         element1.birthday.month === dateformatedMonth
-          ? element1.birthday.day > dateformatedDay
-          : element1.birthday.month > dateformatedMonth;
+          ? element1.birthday.day >= dateformatedDay
+          : element1.birthday.month >= dateformatedMonth;
 
       const e2infuture =
         element2.birthday.month === dateformatedMonth
-          ? element2.birthday.day > dateformatedDay
-          : element2.birthday.month > dateformatedMonth;
+          ? element2.birthday.day >= dateformatedDay
+          : element2.birthday.month >= dateformatedMonth;
 
       if (
         (e1infuture === true && e2infuture === true) ||
@@ -88,11 +110,6 @@ export async function sortDateFunction() {
         return element2.birthday.month - element1.birthday.month;
       }
     }
-    // if (
-    //   element2.birthday.month === dateformatedMonth &&
-    //   element1.birthday.month === dateformatedMonth
-    // ) {
-    //   return element2.birthday.day - element1.birthday.day;
   );
 
   return personssortdate;

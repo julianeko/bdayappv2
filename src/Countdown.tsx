@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { sortDateFunction } from "./storage";
+import { sortDateFunction, countDownFunction } from "./storage";
 import { Person } from "./domain/person";
-
-
 
 function Countdown() {
   const [person, setPerson] = useState<Array<Person>>([]);
+  const [countdown, setCountdown] = useState();
 
   useEffect(() => {
-    sortDateFunction().then((value: any) => {
+    person.forEach((p: Person) => {
+      countDownFunction(p).then((value: any) => {
+        if (value) {
+          console.log(value);
+          setCountdown(value);
+        }
+      });
+    });
+  }, []);
+
+  console.log(countdown);
+
+  useEffect(() => {
+    sortDateFunction().then((value: Person[]) => {
       if (value) {
         setPerson(value);
       }
     });
   }, []);
   console.log(person);
-
-
 
   const onepersonview = person.map((p: Person) => {
     const message = p.message ? "Send Message" : <></>;
@@ -33,6 +43,7 @@ function Countdown() {
           <div>{postcard}</div>
           <div>{present}</div>
           <div>{p.idea}</div>
+          <p>Days to go:{countdown} </p>
         </div>
       </div>
     );
@@ -40,8 +51,10 @@ function Countdown() {
 
   return (
     <>
-      <h1>Test</h1>
-      <div>{onepersonview}</div>{" "}
+      <div className="container">
+        <h1>Test</h1>
+        <div>{onepersonview}</div>{" "}
+      </div>
     </>
   );
 }
