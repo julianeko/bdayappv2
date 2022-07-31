@@ -7,6 +7,7 @@ export class Person {
   postcard: Boolean;
   message: Boolean;
   idea: string;
+  
   constructor(
     name: string,
     birthday: Birthday,
@@ -14,6 +15,7 @@ export class Person {
     postcard: Boolean,
     message: Boolean,
     idea: string
+    
   ) {
     this.name = name;
     this.birthday = birthday;

@@ -19,7 +19,8 @@ h1 {
   color: $fontcolor;
   padding-top: 10px;
 }
-
+Link {color: $fontcolor; }
+a:visited{color: $fontcolor;}
 .onebox {
   margin: 10px;
   padding: 10px;

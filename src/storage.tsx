@@ -23,7 +23,10 @@ const PersonsArray: Array<Person> = [
   new Person("Anna", new Birthday(9, 7), true, false, true, ""),
   new Person("Anna2", new Birthday(10, 8), true, false, true, ""),
   new Person("Anna3", new Birthday(20, 7), true, false, true, ""),
-  new Person("Bla", new Birthday(21, 7), true, false, true, ""),
+  new Person("Bla", new Birthday(25, 7), true, false, true, ""),
+  new Person("Bla2", new Birthday(26, 7), true, false, true, ""),
+  new Person("Bla2", new Birthday(30, 7), true, false, true, ""),
+  new Person("Bla2", new Birthday(27, 12), true, false, true, ""),
 ];
 
 export async function getPersons(): Promise<Person[]> {
@@ -49,29 +52,6 @@ export async function searchFunction(wert: string): Promise<Person[]> {
       return result;
     }
   });
-}
-export async function countDownFunction(e: Person) {
-  const moment = require("moment");
-  const today = moment();
-  const dateformatedDay = Number(today.format("DD"));
-  const dateformatedMonth = Number(today.format("M"));
-  var month = e.birthday.month - 1;
-
-  function yearPlusOne() {
-    var year = new Date().getFullYear();
-    if (e.birthday.month <= dateformatedMonth) {
-      return year + 1;
-    } else return year;
-  }
-
-  var countDownDate = new Date(yearPlusOne(), month, e.birthday.day).getTime();
-  console.log(countDownDate);
-  var now = new Date().getTime();
-  var distance = countDownDate - now;
-  console.log(distance);
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  console.log(days);
-  return days;
 }
 
 export async function sortDateFunction() {
