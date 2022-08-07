@@ -7,7 +7,7 @@ import { More } from "./moreless";
 function AlphabeticList() {
   const [person, setPerson] = useState<Array<Person>>([]);
   const [eingabe, setEingabe] = useState(String);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
   const [personsless, setPersonsless] = useState<Array<More>>([]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function AlphabeticList() {
     const postcard = p.person.postcard ? "Send Postcard" : <></>;
     const present = p.person.present ? "Buy a present" : <></>;
     console.log(p.more);
-    if (p.more === false) {
+    if (show === false) {
       return (
         <div>
           <div className="onebox">
@@ -48,7 +48,11 @@ function AlphabeticList() {
               {p.person.birthday.day}.{p.person.birthday.month}.
               {p.person.birthday.year}
             </div>
-            <div onClick={() => ((p.more = true), console.log(p.more))}>
+            <div
+              onClick={() => (
+                (p.more = true), setShow(p.more), console.log(p.more)
+              )}
+            >
               Click
             </div>
           </div>
@@ -63,7 +67,11 @@ function AlphabeticList() {
               {p.person.birthday.day}.{p.person.birthday.month}.
               {p.person.birthday.year}
             </div>
-            <div onClick={() => ((p.more = false), console.log(p.more))}>
+            <div
+              onClick={() => (
+                (p.more = false), setShow(p.more), console.log(p.more)
+              )}
+            >
               Click
             </div>
 
